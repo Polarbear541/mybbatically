@@ -1,2 +1,3 @@
-mybbatically
+MyBBatically
 ============
+Automatic updater for MyBB
