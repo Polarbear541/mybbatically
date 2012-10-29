@@ -20,7 +20,7 @@ $sub_tabs['upgrade'] = array(
 
 require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
-	
+
 	$parser = new XMLParser($contents);
 	$tree = $parser->get_tree();
 
@@ -46,7 +46,7 @@ if ($mybb->input['action'] == "statistics" || $mybb->input['action'] == "") {
 	$table = new Table;
 	$table->construct_header('MyBB Version Statistics', array("colspan" => 0));
 	$table->construct_header('', array("colspan" => 0));
-	
+
 	$table->construct_cell("<strong>Your forum is currenty running on MyBB version:</strong>", array('width' => '50%'));
 	$table->construct_cell($mybbversion, array('width' => '50%'));
 	$table->construct_row();
@@ -54,7 +54,7 @@ if ($mybb->input['action'] == "statistics" || $mybb->input['action'] == "") {
 	$table->construct_cell("<strong>Latest version available</strong>", array('width' => '50%'));
 	$table->construct_cell($latest_version, array('width' => '50%'));
 	$table->construct_row();
-	
+
 	$table->output('Version Statistics');
 	$page->output_footer();
 }
