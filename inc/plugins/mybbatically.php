@@ -142,11 +142,11 @@ function mybbatically_run()
 	//Move files
 	$dir = "/mybbatically/Upload/";
 	$dirto = "../";
-	if (is_dir($dir)) 
+	if(is_dir($dir)) 
 	{
-		if ($dh = opendir($dir)) 
+		if($dh = opendir($dir)) 
 		{
-			while (($file = readdir($dh)) !== false)
+			while(($file = readdir($dh)) !== false)
 			{
 				if($file == "."||$file == "..") continue;
 				rename($dir.$file, $dirto.$file);
@@ -159,20 +159,20 @@ function mybbatically_run()
 	
 	echo "Successfully unzipped file";
 	
-	//delete remaining directorys
+	//Delete remaining directories
 	function rmdir_recursive($dir) 
 	{
 		$files = scandir($dir);
-		array_shift($files);    // remove '.' from array
-		array_shift($files);    // remove '..' from array
+		array_shift($files);    //Remove '.' from array
+		array_shift($files);    //Remove '..' from array
 		
-		foreach ($files as $file) 
+		foreach($files as $file) 
 		{
 			$file = $dir . '/' . $file;
-			if (is_dir($file)) 
+			if(is_dir($file)) 
 			{
 				rmdir_recursive($file);
-				if (file_exists($file))
+				if(file_exists($file))
 				{
 					rmdir($file);
 				}
@@ -189,9 +189,9 @@ function mybbatically_run()
 $dir = 'mybbatically';
 rmdir_recursive($dir);
 
-//remove zip
+//Remove zip
 unlink('mybbatically.zip');
-// Unlink lock file
+//Unlink lock file
 unlink('../install/lock');
 }
 ?>
