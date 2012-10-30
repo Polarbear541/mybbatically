@@ -1,7 +1,7 @@
 <?php
 if(!defined("IN_MYBB"))
 {
-    die("You Cannot Access This File Directly. Please Make Sure IN_MYBB Is Defined.");
+	die("You Cannot Access This File Directly. Please Make Sure IN_MYBB Is Defined.");
 }
 
 $plugins->add_hook('admin_tools_menu', 'mybbatically_admin_tools_menu');
