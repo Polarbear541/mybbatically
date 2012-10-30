@@ -140,21 +140,35 @@ function mybbatically_run()
 	}
 	
 	//Move files
-	$dir = "/mybbatically/Upload/";
-	$dirto = "../";
-	if(is_dir($dir)) 
+	$srcDir = './mybbatically/Upload/';
+	$destDir = '../';
+	
+	function recursive_move($dirsource, $dirdest)
 	{
-		if($dh = opendir($dir)) 
+		if(is_dir($dirsource))$dir_handle=opendir($dirsource);
+		$dirname = substr($dirsource,strrpos($dirsource,"/")+1);
+		
+		while($file=readdir($dir_handle))
 		{
-			while(($file = readdir($dh)) !== false)
+			if($file!="." && $file!="..")
 			{
-				if($file == "."||$file == "..") continue;
-				rename($dir.$file, $dirto.$file);
+				if(!is_dir($dirsource."/".$file))
+				{
+					copy ($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
+					unlink($dirsource."/".$file);
+				}
+				else
+				{
+					$dirdest1 = $dirdest."/".$dirname;
+					recursive_move($dirsource."/".$file, $dirdest1);
+				}
 			}
-			closedir($dh);
 		}
+		closedir($dir_handle);
+		rmdir($dirsource);
 	}
-
+	recursive_move($srcDir,$destDir);
+	
 	$zip->close();
 	
 	echo "Successfully unzipped file";
@@ -193,5 +207,6 @@ rmdir_recursive($dir);
 unlink('mybbatically.zip');
 //Unlink lock file
 unlink('../install/lock');
+echo "<meta http-equiv='refresh' content='0; url='".MYBB_ROOT."/install/upgrade.php'/>";
 }
 ?>
