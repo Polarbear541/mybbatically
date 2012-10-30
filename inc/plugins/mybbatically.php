@@ -109,7 +109,7 @@ function mybbatically_run()
 
     $db->update_query('settings', array('value'=>'1'), "name='boardclosed'");
     rebuild_settings();
-    $download_url = "http://mybb.com/download/latest";  
+    $download_url = "http://cloud.github.com/downloads/mybb/mybb16/mybb_1608.zip";  
  $file_zipped = "mybbatically.zip";
  $file_unzipped = "mybbatically";  
 
@@ -118,8 +118,7 @@ function mybbatically_run()
 
  curl_setopt($ch, CURLOPT_URL,$download_url);  
  curl_setopt($ch, CURLOPT_FAILONERROR, true);  
- curl_setopt($ch, CURLOPT_HEADER,0);  
- curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);  
+ curl_setopt($ch, CURLOPT_HEADER,0);    
  curl_setopt($ch, CURLOPT_AUTOREFERER, true);  
  curl_setopt($ch, CURLOPT_BINARYTRANSFER,true);  
  curl_setopt($ch, CURLOPT_TIMEOUT, 10);  
@@ -145,9 +144,12 @@ function mybbatically_run()
    if($zip->open("$file_zipped") != "true") {  
        echo "<br>Could not open $file_zipped";  
          }  
-   $zip->extractTo("$file_unzipped");
+   if(!$zip->extractTo("$file_unzipped"))
+   {
+	echo "FAIL";
+   }
 $dir = "/mybbatically/Upload/";
-$dirto = "/";
+$dirto = "../";
 if (is_dir($dir)) {
     if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== false) {
@@ -191,6 +193,6 @@ rmdir_recursive($dir);
 
 // Unlink lock file
 
-unlink('/install/lock');
+unlink('../install/lock');
 }
  ?>
