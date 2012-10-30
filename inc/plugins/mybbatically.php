@@ -109,7 +109,14 @@ function mybbatically_run()
 
     $db->update_query('settings', array('value'=>'1'), "name='boardclosed'");
     rebuild_settings();
-    $download_url = "http://cloud.github.com/downloads/mybb/mybb16/mybb_1608.zip";  
+	
+	require_once MYBB_ROOT."inc/class_xml.php";
+	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
+	$parser = new XMLParser($contents);
+	$tree = $parser->get_tree();
+	$latest_code = $tree['mybb']['version_code']['value'];
+	
+    $download_url = "http://cloud.github.com/downloads/mybb/mybb16/mybb_$latest_code.zip";  
  $file_zipped = "mybbatically.zip";
  $file_unzipped = "mybbatically";  
 
@@ -190,9 +197,9 @@ if (is_dir($dir)) {
 // remove directory
 $dir = 'mybbatically';
 rmdir_recursive($dir);
-
+//remove zip
+unlink('mybbatically.zip');
 // Unlink lock file
-
 unlink('../install/lock');
 }
  ?>
