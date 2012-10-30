@@ -10,9 +10,13 @@ $plugins->add_hook('admin_tools_permissions', 'mybbatically_admin_tools_permissi
 
 function mybbatically_info()
 {
+	global $lang;
+
+	$lang->load('mybbatically');
+
 	return array(
-		"name"  => "MyBBatically",
-		"description"=> "Automatically update your board to the latest released MyBB Version",
+		"name"  => $lang->mybbatically,
+		"description"=> $lang->mybbatically_desc,
 		"website"        => "",
 		"author"        => "Polarbear541 & Vernier",
 		"authorsite"    => "",
@@ -24,13 +28,15 @@ function mybbatically_info()
 
 function mybbatically_activate()
 {
-	global $db;
+	global $db, $lang;
 	
+	$lang->load('mybbatically');
+
 	$mybbatically_group = array(
 		'gid'    => 'NULL',
 		'name'  => 'mybbatically',
-		'title'      => 'MyBBatically',
-		'description'    => 'Configuration settings for the MyBBatically plugin',
+		'title'      => $lang->mybbatically,
+		'description'    => $lang->settings_desc,
 		'disporder'    => "1",
 		'isdefault'  => "0",
 	);
@@ -41,8 +47,8 @@ function mybbatically_activate()
 	$mybbatically_setting_1 = array(
 		'sid'            => 'NULL',
 		'name'        => 'mybbatically_global_switch',
-		'title'            => 'Enable MyBBatically?',
-		'description'    => 'If you set this option to on, MyBBatically will function on your board.',
+		'title'            => $lang->enable,
+		'description'    => $lang->enable_desc,
 		'optionscode'    => 'onoff',
 		'value'        => '1',
 		'disporder'        => 1,
