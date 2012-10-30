@@ -9,7 +9,7 @@ $page->add_breadcrumb_item("MyBBaticaly", "index.php?module=tools-mybbatically")
 $sub_tabs['statistics'] = array(
             'title' => 'Statistics',
             'link' => "index.php?module=tools-mybbatically&amp;action=statistics",
-            'description' => "Information about your board, including the version you're currently running &amp; the currenty available version."
+            'description' => "Information about your board, including the version you're currently running &amp; the currently available version."
         );
 
 $sub_tabs['upgrade'] = array(
@@ -31,7 +31,7 @@ if ($mybb->input['action'] == "statistics" || $mybb->input['action'] == "") {
 
 	if($latest_code > $mybb->version_code)
 	{
-		flash_message("Your forum is currenty running MyBB ".$mybb->version_code." while the latest available version is ".$latest_code.". We advise you upgrade to the latest version as soon as possible.", "error");
+		flash_message("Your forum is currently running MyBB ".$mybb->version_code." while the latest available version is ".$latest_code.". We advise you upgrade to the latest version as soon as possible.", "error");
 		$mybbversion = "<span style='color: red;'><strong>$mybb->version</strong></span>";
 	}
 	else
@@ -73,7 +73,7 @@ if ($mybb->input['action'] == "upgrade")
 	$table->construct_cell("<strong>Updating to MyBB Version:</strong>", array('width' => '70%'));
 	$table->construct_cell("$latest_version", array('width' => '20%'));
 	$table->construct_row();
-	$table->construct_cell("<span style='font-size: 25px;'><strong><u>Important Notice:</u></strong></span><br /> This tool will automaticaly download the latest version of MyBB directly from mybb.com. After clicking submit, you will be redirected to the upgrade page where you must upgrade your board. Your board will be temporarily set offline until you have finished upgrading. We strongly advise you take a backup of your site &amp; database before upgrading. Please make note of the current version of MyBB you're running from above. Please check the checkbox on the right to ensure you want to upgrade.", array('width' => '70%'));
+	$table->construct_cell("<span style='font-size: 25px;'><strong><u>Important Notice:</u></strong></span><br /> This tool will automatically download the latest version of MyBB directly from mybb.com. After clicking submit, your board will be temporarily set offline until you have finished upgrading. We strongly advise you take a backup of your site &amp; database before upgrading. Please make note of the current version of MyBB you're running from above. Please check the checkbox on the right to ensure you want to upgrade.", array('width' => '70%'));
 	$table->construct_cell("<div align='center'>Yes, upgrade my board!<br />".$form->generate_check_box('upgrade_true','upgrade_checked')."</div>", array('width' => '20%'));
 	$table->construct_row();
 	$table->output('Version Statistics');

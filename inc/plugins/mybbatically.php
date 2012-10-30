@@ -211,8 +211,5 @@ rmdir_recursive($dir);
 
 //Remove zip
 unlink('mybbatically.zip');
-//Unlink lock file
-unlink('../install/lock');
-echo "<meta http-equiv='refresh' content='0; url='".MYBB_ROOT."/install/upgrade.php'/>";
 }
 ?>
