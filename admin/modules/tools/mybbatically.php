@@ -49,7 +49,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table->construct_header('MyBB Version Statistics', array("colspan" => 0));
 		$table->construct_header('', array("colspan" => 0));
 		
-		$table->construct_cell("<strong>Your forum is currenty running on MyBB version:</strong>", array('width' => '50%'));
+		$table->construct_cell("<strong>Your forum is currently running on MyBB version:</strong>", array('width' => '50%'));
 		$table->construct_cell($mybbversion, array('width' => '50%'));
 		$table->construct_row();
 
@@ -61,7 +61,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$page->output_footer();
 	}
 
-	if ($mybb->input['action'] == "upgrade")
+	if($mybb->input['action'] == "upgrade" && $mybb->version_code != $latest_code)
 	{
 		$page->output_header('MyBBatically');
 		$page->output_nav_tabs($sub_tabs, 'upgrade');
@@ -100,6 +100,19 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		
 		$form->end();
 		$page->output_footer();
+	}
+	else
+	{
+		$page->output_header('MyBBatically');
+		$page->output_nav_tabs($sub_tabs, 'upgrade');
+		$table = new Table;
+		$table->construct_header('You are already on the Latest Version', array("colspan" => 0));
+		$table->construct_header('', array("colspan" => 0));
+		$table->construct_cell("Congratulations! Your forum is currently running the latest version of MyBB.", array('width' => '70%'));
+		$table->construct_cell("$mybb->version", array('width' => '20%'));
+		$table->construct_row();
+		$table->output('Version Statistics');
+		$page->output_footer();	
 	}
 }
 ?>
