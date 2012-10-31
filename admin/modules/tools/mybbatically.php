@@ -60,8 +60,8 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table->output('Version Statistics');
 		$page->output_footer();
 	}
-
-	if($mybb->input['action'] == "upgrade" && $mybb->version_code != $latest_code)
+//
+	if($mybb->input['action'] == "upgrade" && $mybb->version_code == $latest_code)
 	{
 		$page->output_header('MyBBatically');
 		$page->output_nav_tabs($sub_tabs, 'upgrade');
@@ -75,14 +75,20 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table->construct_cell("<strong>Updating to MyBB Version:</strong>", array('width' => '70%'));
 		$table->construct_cell("$latest_version", array('width' => '20%'));
 		$table->construct_row();
-		$table->construct_cell("<span style='font-size: 25px;'><strong><u>Important Notice:</u></strong></span><br /> This tool will automatically download the latest version of MyBB directly from mybb.com. After clicking submit, your board will be temporarily set offline until you have finished upgrading. We strongly advise you take a backup of your site &amp; database before upgrading. Please make note of the current version of MyBB you're running from above. Please check the checkbox on the right to ensure you want to upgrade.", array('width' => '70%'));
+		$table->construct_cell("<span style='font-size: 25px;'><strong><u>Important Notice:</u></strong></span><br /> This tool will automatically download the latest version of MyBB directly from mybb.com. After clicking submit, the latest version of MyBB will be downloaded and will overwrite your current files. If you have made any core edits to files, there will be overwritten so we advise listing the edits made and re-applying the edits after the upgrade process is complete. We strongly advise you take a backup of your site &amp; database before upgrading. Please make note of the current version of MyBB you're running from above. Please check the checkbox on the right to ensure you want to upgrade.", array('width' => '70%'));
 		$table->construct_cell("<div align='center'>Yes, upgrade my board!<br />".$form->generate_check_box('upgrade_true','upgrade_checked')."</div>", array('width' => '20%'));
+		$table->construct_row();
+		$table->construct_cell("<span style='font-size: 25px;'><strong><u>Upgrading:</u></strong></span><br /> (<strong><u>If you are not sure if the upgrade script needs to be run, please leave the checkbox checked</u></strong>) Some versions don't require running the upgrade script, however the majority do. Please uncheck the checkbox on the right to leave the lock file intact and not run the upgrade script.", array('width' => '70%'));
+		$table->construct_cell("<div align='center'>Delete the lock file and run the upgrade script<br />".$form->generate_check_box('lock_true','lock_checked', '', array('checked' => 1))."</div>", array('width' => '20%'));
 		$table->construct_row();
 		$table->output('Version Statistics');
 		
 		$buttons[] = $form->generate_submit_button('Update');
 		$form->output_submit_wrapper($buttons);
-		
+
+}
+
+
 		if ($mybb->request_method == "post" && $mybb->input['upgrade_true'] != 'upgrade_checked')
 		{
 			flash_message('Please check the checkbox to confirm the upgrade process.', 'error');
@@ -92,12 +98,16 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 
 		elseif ($mybb->request_method == "post" && $mybb->input['upgrade_true'] == 'upgrade_checked')
 		{
+		if ($mybb->input['lock_true'] == 'lock_checked')
+		{
+			unlink('../install/lock');
+		}
 			require_once MYBB_ROOT."inc/plugins/mybbatically.php";
 			mybbatically_run();
 			flash_message('Upgrading', 'success');
 			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
 		}
-		
+
 		$form->end();
 		$page->output_footer();
 	}
@@ -114,5 +124,5 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table->output('Version Statistics');
 		$page->output_footer();	
 	}
-}
+
 ?>
