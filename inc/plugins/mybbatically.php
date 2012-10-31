@@ -89,9 +89,6 @@ function mybbatically_admin_tools_permissions(&$admin_permissions)
 
 function mybbatically_run()
 {
-	global $db;
-	$db->update_query('settings', array('value'=>'1'), "name='boardclosed'");
-	rebuild_settings();
 	
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
@@ -101,7 +98,7 @@ function mybbatically_run()
 	
 	$download_url = "http://cloud.github.com/downloads/mybb/mybb16/mybb_$latest_code.zip";  
 	$file_zipped = "mybbatically.zip";
-	$file_unzipped = "mybbatically";  
+	$file_unzipped = "mybbatically";
 	
 	$ch = curl_init();  
 	$fp = fopen("$file_zipped", "w");
@@ -209,7 +206,7 @@ function mybbatically_run()
 $dir = 'mybbatically';
 rmdir_recursive($dir);
 
-//Remove zip
+//Remove zip (Issue with windows server)
 unlink('mybbatically.zip');
 }
 ?>
