@@ -87,6 +87,57 @@ function mybbatically_admin_tools_permissions(&$admin_permissions)
 	$admin_permissions['mybbatically'] = 'Allowed to update board?';
 } 
 
+function recursive_move($dirsource, $dirdest)
+{
+	if(is_dir($dirsource))$dir_handle=opendir($dirsource);
+	$dirname = substr($dirsource,strrpos($dirsource,"/")+1);
+	
+	while($file=readdir($dir_handle))
+	{
+		if($file!="." && $file!="..")
+		{
+			if(!is_dir($dirsource."/".$file))
+			{
+				copy ($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
+				unlink($dirsource."/".$file);
+			}
+			else
+			{
+				$dirdest1 = $dirdest."/".$dirname;
+				recursive_move($dirsource."/".$file, $dirdest1);
+			}
+		}
+	}
+	closedir($dir_handle);
+	rmdir($dirsource);
+}
+
+function rmdir_recursive($dir) 
+{
+	$files = scandir($dir);
+	array_shift($files);    //Remove '.' from array
+	array_shift($files);    //Remove '..' from array
+	
+	foreach($files as $file) 
+	{
+		$file = $dir . '/' . $file;
+		if(is_dir($file)) 
+		{
+			rmdir_recursive($file);
+			if(file_exists($file))
+			{
+				rmdir($file);
+			}
+		} 
+		else
+		{
+			unlink($file);
+		}
+	}
+	
+	rmdir($dir);
+}
+
 function mybbatically_run()
 {
 	
@@ -142,31 +193,6 @@ function mybbatically_run()
 	//Move files
 	$srcDir = './mybbatically/Upload/';
 	$destDir = '../';
-	
-	function recursive_move($dirsource, $dirdest)
-	{
-		if(is_dir($dirsource))$dir_handle=opendir($dirsource);
-		$dirname = substr($dirsource,strrpos($dirsource,"/")+1);
-		
-		while($file=readdir($dir_handle))
-		{
-			if($file!="." && $file!="..")
-			{
-				if(!is_dir($dirsource."/".$file))
-				{
-					copy ($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
-					unlink($dirsource."/".$file);
-				}
-				else
-				{
-					$dirdest1 = $dirdest."/".$dirname;
-					recursive_move($dirsource."/".$file, $dirdest1);
-				}
-			}
-		}
-		closedir($dir_handle);
-		rmdir($dirsource);
-	}
 	recursive_move($srcDir,$destDir);
 	
 	$zip->close();
@@ -174,36 +200,10 @@ function mybbatically_run()
 	echo "Successfully unzipped file";
 	
 	//Delete remaining directories
-	function rmdir_recursive($dir) 
-	{
-		$files = scandir($dir);
-		array_shift($files);    //Remove '.' from array
-		array_shift($files);    //Remove '..' from array
-		
-		foreach($files as $file) 
-		{
-			$file = $dir . '/' . $file;
-			if(is_dir($file)) 
-			{
-				rmdir_recursive($file);
-				if(file_exists($file))
-				{
-					rmdir($file);
-				}
-			} 
-			else
-			{
-				unlink($file);
-			}
-		}
-		
-		rmdir($dir);
-	}
-	
-$dir = 'mybbatically';
-rmdir_recursive($dir);
+	$dir = 'mybbatically';
+	rmdir_recursive($dir);
 
-//Remove zip (Permission issue with windows server)
-unlink('mybbatically.zip');
+	//Remove zip (Permission issue with windows server)
+	unlink('mybbatically.zip');
 }
 ?>
