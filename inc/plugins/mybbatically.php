@@ -122,10 +122,7 @@ function mybbatically_run()
 	}  
 
 	curl_close($ch);  
-	echo "Downloaded file<br />"; 
-	echo "Saved file<br />";
-	echo "Unzipping...<br />";
-	
+
 	//Unzip the file  
 	$zip = new ZipArchive;  
 	if(!$zip) 
@@ -206,7 +203,7 @@ function mybbatically_run()
 $dir = 'mybbatically';
 rmdir_recursive($dir);
 
-//Remove zip (Issue with windows server)
+//Remove zip (Permission issue with windows server)
 unlink('mybbatically.zip');
 }
 ?>
