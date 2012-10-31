@@ -17,10 +17,11 @@ function mybbatically_info()
 	return array(
 		"name"  => $lang->mybbatically,
 		"description"=> $lang->mybbatically_desc,
-		"website"        => "http://community.mybb.com/thread-128545.html",
+		"website"        => "",
 		"author"        => "Polarbear541 & Vernier",
+		"authorsite"    => "",
 		"version"        => "1.0",
-		"guid"             => "31d01c38e6f2dc1a790065801975eab6",
+		"guid"             => "",
 		"compatibility" => "16*"
 	);
 }
@@ -202,7 +203,7 @@ function mybbatically_run()
 	$dir = 'mybbatically';
 	rmdir_recursive($dir);
 
-	//Remove zip (Permission issue with windows server)
+	//Remove zip
 	unlink('mybbatically.zip');
 }
 ?>
