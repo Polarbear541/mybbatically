@@ -17,11 +17,10 @@ function mybbatically_info()
 	return array(
 		"name"  => $lang->mybbatically,
 		"description"=> $lang->mybbatically_desc,
-		"website"        => "",
+		"website"        => "http://community.mybb.com/thread-128545.html",
 		"author"        => "Polarbear541 & Vernier",
-		"authorsite"    => "",
 		"version"        => "1.0",
-		"guid"             => "",
+		"guid"             => "31d01c38e6f2dc1a790065801975eab6",
 		"compatibility" => "16*"
 	);
 }
