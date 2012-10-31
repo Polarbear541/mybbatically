@@ -9,7 +9,7 @@ if(!defined("IN_MYBB"))
 
 if($mybb->settings['mybbatically_global_switch'] == 1)
 {
-	$page->add_breadcrumb_item("MyBBaticaly", "index.php?module=tools-mybbatically");
+	$page->add_breadcrumb_item("MyBBatically", "index.php?module=tools-mybbatically");
 	$sub_tabs['statistics'] = array(
 		'title' => $lang->stats,
 		'link' => "index.php?module=tools-mybbatically&amp;action=statistics",
