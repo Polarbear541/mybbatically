@@ -61,7 +61,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$page->output_footer();
 	}
 //
-	if($mybb->input['action'] == "upgrade" && $mybb->version_code == $latest_code)
+	if($mybb->input['action'] == "upgrade" && $mybb->version_code != $latest_code)
 	{
 		$page->output_header('MyBBatically');
 		$page->output_nav_tabs($sub_tabs, 'upgrade');
@@ -85,9 +85,6 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		
 		$buttons[] = $form->generate_submit_button('Update');
 		$form->output_submit_wrapper($buttons);
-
-}
-
 
 		if ($mybb->request_method == "post" && $mybb->input['upgrade_true'] != 'upgrade_checked')
 		{
@@ -124,5 +121,5 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table->output('Version Statistics');
 		$page->output_footer();	
 	}
-
+}
 ?>
