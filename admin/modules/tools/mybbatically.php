@@ -72,10 +72,10 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table = new Table;
 		$table->construct_header($lang->upgrade_your_board, array("colspan" => 0));
 		$table->construct_header('', array("colspan" => 0));
-		$table->construct_cell($lang->updating_from_version, array('width' => '70%'));
+		$table->construct_cell($lang->upgrading_from_version, array('width' => '70%'));
 		$table->construct_cell("$mybb->version", array('width' => '20%'));
 		$table->construct_row();
-		$table->construct_cell($lang->updating_to_version, array('width' => '70%'));
+		$table->construct_cell($lang->upgrading_to_version, array('width' => '70%'));
 		$table->construct_cell("$latest_version", array('width' => '20%'));
 		$table->construct_row();
 		$table->construct_cell($lang->important_notice, array('width' => '70%'));
@@ -124,7 +124,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table = new Table;
 		$table->construct_header($lang->error_already_latest_version, array("colspan" => 0));
 		$table->construct_header('', array("colspan" => 0));
-		$table->construct_cell($lang->congratulations_latest_version, array('width' => '70%'));
+		$table->construct_cell($lang->running_latest_version, array('width' => '70%'));
 		$table->construct_cell("$mybb->version", array('width' => '20%'));
 		$table->construct_row();
 		$table->output($lang->version_stats);
