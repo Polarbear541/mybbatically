@@ -203,8 +203,6 @@ function mybbatically_run()
 	
 	$zip->close();
 	
-	echo "Successfully unzipped file";
-	
 	//Delete remaining directories
 	$dir = 'mybbatically';
 	rmdir_recursive($dir);
