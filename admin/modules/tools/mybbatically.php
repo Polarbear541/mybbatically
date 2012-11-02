@@ -9,7 +9,7 @@ if(!defined("IN_MYBB"))
 
 if($mybb->settings['mybbatically_global_switch'] == 1)
 {
-	$page->add_breadcrumb_item("MyBBatically", "index.php?module=tools-mybbatically");
+	$page->add_breadcrumb_item("MyBBaticaly", "index.php?module=tools-mybbatically");
 	$sub_tabs['statistics'] = array(
 		'title' => $lang->stats,
 		'link' => "index.php?module=tools-mybbatically&amp;action=statistics",
@@ -98,14 +98,20 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 
 		elseif ($mybb->request_method == "post" && $mybb->input['upgrade_true'] == 'upgrade_checked')
 		{
+			require_once MYBB_ROOT."inc/plugins/mybbatically.php";
 		if ($mybb->input['lock_true'] == 'lock_checked')
 		{
+			mybbatically_run();
 			unlink('../install/lock');
+			admin_redirect('/install/upgrade.php');
+			exit;
 		}
-			require_once MYBB_ROOT."inc/plugins/mybbatically.php";
+		elseif ($mybb->input['lock_true'] != 'lock_checked')
+		{
 			mybbatically_run();
 			flash_message($lang->upgrade_in_progress, 'success');
 			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
+		}
 		}
 
 		$form->end();
