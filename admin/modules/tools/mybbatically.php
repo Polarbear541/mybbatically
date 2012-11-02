@@ -64,7 +64,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$page->output_footer();
 	}
 	
-	if($mybb->input['action'] == "upgrade" && $mybb->version_code != $latest_code)
+	if($mybb->input['action'] == "upgrade")
 	{
 		$page->output_header($lang->mybbatically);
 		$page->output_nav_tabs($sub_tabs, 'upgrade');
