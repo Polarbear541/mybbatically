@@ -139,7 +139,7 @@ function rmdir_recursive($dir)
 
 function mybbatically_run()
 {
-	global $config;
+	global $config, $mybb;
 
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
@@ -209,5 +209,8 @@ function mybbatically_run()
 
 	//Remove zip
 	unlink('mybbatically.zip');
+
+	log_admin_action(array('do' => 'Upgraded board to the latest available version on '.date($mybb->settings['dateformat']).' at '.date($mybb->settings['timeformat'])));
 }
+
 ?>
