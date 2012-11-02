@@ -23,7 +23,7 @@ $l['latest_version'] = ' while the latest available version is ';
 $l['advise_upgrade'] = '. We advise you upgrade to the latest version as soon as possible.';
 $l['running_latest_version'] = 'Congratulations! Your forum is currently running the latest version of MyBB.';
 $l['error_confirm_upgrade'] = 'Please check the checkbox to confirm the upgrade process.';
-$l['upgrade_in_progress'] = 'Upgrade in progress.';
+$l['upgraded'] = 'Congratulations! Your board has successfully been upgraded to MyBB version ';
 
 // Version Variables
 $l['currently_running_version'] = '<strong>Your forum is currently running on MyBB version:</strong>';
