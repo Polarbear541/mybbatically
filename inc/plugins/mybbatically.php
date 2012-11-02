@@ -139,7 +139,8 @@ function rmdir_recursive($dir)
 
 function mybbatically_run()
 {
-	
+	global $config;
+
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
 	$parser = new XMLParser($contents);
@@ -173,8 +174,10 @@ function mybbatically_run()
 
 	curl_close($ch);  
 
+
 	//Unzip the file  
-	$zip = new ZipArchive;  
+	$zip = new ZipArchive;
+
 	if(!$zip) 
 	{  
 		echo "<br>Could not create .zip archive";
@@ -188,10 +191,14 @@ function mybbatically_run()
 	{
 		echo "<br>Could not extract $file_zipped";
 	}
-	
+
+
 	//Move files
 	$srcDir = './mybbatically/Upload/';
 	$destDir = '../';
+
+	rename($srcDir.'/admin', $srcDir.'/'.$config['admin_dir']);
+
 	recursive_move($srcDir,$destDir);
 	
 	$zip->close();
