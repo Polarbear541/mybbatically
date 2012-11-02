@@ -109,7 +109,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		elseif ($mybb->input['lock_true'] != 'lock_checked')
 		{
 			mybbatically_run();
-			flash_message($lang->upgrade_in_progress, 'success');
+			flash_message($lang->upgraded.$mybb->version_code, 'success');
 			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
 		}
 		}
