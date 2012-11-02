@@ -68,11 +68,13 @@ function mybbatically_deactivate()
 
 function mybbatically_admin_tools_menu(&$sub_menu)
 {
-	global $mybb;
+	global $mybb, $lang;
 	
+	$lang->load('mybbatically');
+
 	if ($mybb->settings['mybbatically_global_switch'] == 1)
 	{
-		$sub_menu[] = array('id' => 'mybbatically', 'title' => 'MyBBatically', 'link' => 'index.php?module=tools-mybbatically');
+		$sub_menu[] = array('id' => 'mybbatically', 'title' => $lang->mybbatically, 'link' => 'index.php?module=tools-mybbatically');
 	}
 }
 
@@ -83,7 +85,7 @@ function mybbatically_admin_tools_action_handler(&$actions)
 
 function mybbatically_admin_tools_permissions(&$admin_permissions)
 {
-	$admin_permissions['mybbatically'] = 'Allowed to update board?';
+	$admin_permissions['mybbatically'] = $lang->allowed_to_upgrade_board;
 } 
 
 function recursive_move($dirsource, $dirdest)
@@ -139,7 +141,9 @@ function rmdir_recursive($dir)
 
 function mybbatically_run()
 {
-	global $config, $mybb;
+	global $config, $lang, $mybb;
+
+	$lang->load('mybbatically')
 
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
@@ -167,8 +171,8 @@ function mybbatically_run()
 	
 	if (!$page) 
 	{  
-		echo "<br />cURL error number:" .curl_errno($ch);  
-		echo "<br />cURL error:" . curl_error($ch);  
+		echo $lang->curl_error_number.curl_errno($ch);  
+		echo $lang->curl_error. curl_error($ch);  
 		exit;  
 	}  
 
@@ -180,16 +184,16 @@ function mybbatically_run()
 
 	if(!$zip) 
 	{  
-		echo "<br>Could not create .zip archive";
+		echo $lang->could_not_create_zip;
 		exit;  
 	}  
 	if($zip->open("$file_zipped") != "true") 
 	{  
-		echo "<br>Could not open $file_zipped";  
+		echo $lang->could_not_open_zip;  
 	}  
 	if(!$zip->extractTo("$file_unzipped"))
 	{
-		echo "<br>Could not extract $file_zipped";
+		echo $lang->could_not_extract_zip;
 	}
 
 
@@ -210,7 +214,7 @@ function mybbatically_run()
 	//Remove zip
 	unlink('mybbatically.zip');
 
-	log_admin_action(array('do' => 'Upgraded board to the latest available version on '.date($mybb->settings['dateformat']).' at '.date($mybb->settings['timeformat'])));
+	log_admin_action(array('do' => $lang->upgraded_board_on.date($mybb->settings['dateformat']).$lang->at.date($mybb->settings['timeformat'])));
 }
 
 ?>
