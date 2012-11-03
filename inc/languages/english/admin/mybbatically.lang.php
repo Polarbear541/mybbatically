@@ -42,10 +42,10 @@ $l['important_notice'] = '<span style=\'font-size: 25px;\'><strong><u>Important 
 $l['upgrade_my_board'] = '<div align=\'center\'>Yes, upgrade my board!<br />';
 $l['upgrading_notice'] = '<span style=\'font-size: 25px;\'><strong><u>Upgrading:</u></strong></span><br /> (<strong><u>If you are not sure if the upgrade script needs to be run, please leave the checkbox checked</u></strong>) Some versions don\'t require running the upgrade script, however the majority do. Please uncheck the checkbox on the right to leave the lock file intact.';
 $l['delete_lock_file'] = '<div align=\'center\'>Delete the lock file to enable upgrade script<br />';
+$l['overwrite_image_files_notice'] = '<span style=\'font-size: 25px;\'><strong><u>Overwriting image files</u></strong></span><br /> This option allows you to select whether you\'d like to overwrite the image files or not. You may wish to de-select this if you have uploaded your theme\'s files to the images directory ad this will stop them being overwritten by the upgrader.';
+$l['overwrite_image_files'] = '<div align=\'center\'>Overwrite image files.<br />'
 
 // Error Variables
-$l['curl_error_number'] = '<br />cURL error number: ';
-$l['curl_error'] = '<br />cURL error: ';
 $l['could_not_create_zip'] = '<br />Could not create .zip archive.';
 $l['could_not_open_zip'] = '<br />Could not open $file_zipped.';
 $l['could_not_extract_zip'] = '<br>Could not extract $file_zipped.';
