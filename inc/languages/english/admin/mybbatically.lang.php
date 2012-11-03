@@ -53,5 +53,5 @@ $l['could_not_extract_zip'] = '<br>Could not extract $file_zipped.';
 // Admin Log Variables
 $l['upgraded_board_on'] = 'Upgraded board to the latest available version on ';
 $l['at'] =  ' at ';
-$l['allowed_to_upgrade_board'] = 'Allowed to updgrade board?'
+$l['allowed_to_upgrade_board'] = 'Allowed to updgrade board?';
 ?>
