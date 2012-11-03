@@ -17,6 +17,15 @@ $l['mybb_version_stats'] = 'MyBB Version Statistics';
 $l['upgrade'] = 'Upgrade';
 $l['upgrade_desc'] = 'Upgrade your board to the latest version of MyBB.';
 
+// Backup Variables
+$l['backup'] = 'Backup';
+$l['backup_desc'] = 'Backup your boards files and database.';
+$l['backup_header'] = 'Backup your board';
+$l['backup_files'] = 'Backup your files';
+$l['backup_database'] = 'Backup your database';
+$l['button_files'] = 'Download File Backup';
+$l['button_db'] = 'Download DB Backup';
+
 // Message Variables
 $l['currently_running'] = 'Your forum is currently running MyBB ';
 $l['latest_version'] = ' while the latest available version is ';

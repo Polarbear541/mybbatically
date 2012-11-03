@@ -4,12 +4,12 @@ if(!defined("IN_MYBB"))
 	die("You Cannot Access This File Directly. Please Make Sure IN_MYBB Is Defined.");
 }
 
-	global $lang;
-	$lang->load('mybbatically');
+global $lang;
+$lang->load('mybbatically');
 
 if($mybb->settings['mybbatically_global_switch'] == 1)
 {
-	$page->add_breadcrumb_item("MyBBaticaly", "index.php?module=tools-mybbatically");
+	$page->add_breadcrumb_item($lang->mybbatically, "index.php?module=tools-mybbatically");
 	$sub_tabs['statistics'] = array(
 		'title' => $lang->stats,
 		'link' => "index.php?module=tools-mybbatically&amp;action=statistics",
@@ -20,6 +20,12 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		'title' => $lang->upgrade,
 		'link' => "index.php?module=tools-mybbatically&amp;action=upgrade",
 		'description' => $lang->upgrade_desc
+	);
+	
+	$sub_tabs['backup'] = array(
+		'title' => $lang->backup,
+		'link' => "index.php?module=tools-mybbatically&amp;action=backup",
+		'description' => $lang->backup_desc
 	);
 
 	require_once MYBB_ROOT."inc/class_xml.php";
@@ -33,7 +39,6 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 
 	if($mybb->input['action'] == "statistics" || $mybb->input['action'] == "") 
 	{
-
 		if($latest_code > $mybb->version_code)
 		{
 			flash_message($lang->currently_running.$mybb->version_code.$lang->latest_version.$latest_code.$lang->advise_upgrade, "error");
@@ -120,17 +125,38 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$form->end();
 		$page->output_footer();
 	}
+	
+	if($mybb->input['action'] == "backup" && $mybb->request_method == "post")
+	{
+		if(isset($mybb->input['do_filebackup']))
+		{
+			mybbatically_backup_files();
+		}
+		elseif(isset($mybb->input['do_dbbackup']))
+		{
+			mybbatically_backup_db();
+		}
+	}
 	else
 	{
 		$page->output_header($lang->mybbatically);
-		$page->output_nav_tabs($sub_tabs, 'upgrade');
+		$page->output_nav_tabs($sub_tabs, 'backup');
+		$form = new Form("index.php?module=tools-mybbatically&amp;action=backup", "post", "mybbatically");
 		$table = new Table;
-		$table->construct_header($lang->error_already_latest_version, array("colspan" => 0));
+		$table->construct_header($lang->backup_desc, array("colspan" => 0));
 		$table->construct_header('', array("colspan" => 0));
-		$table->construct_cell($lang->congratulations_latest_version, array('width' => '70%'));
-		$table->construct_cell("$mybb->version", array('width' => '20%'));
+
+		$table->construct_cell($lang->backup_files, array('width' => '50%'));
+		$table->construct_cell($form->generate_submit_button($lang->button_files, array("name" => "do_filebackup")), array('width' => '50%'));
 		$table->construct_row();
-		$table->output($lang->version_stats);
-		$page->output_footer();	
+
+		$table->construct_cell($lang->backup_database, array('width' => '50%'));
+		$table->construct_cell($form->generate_submit_button($lang->button_db, array("name" => "do_dbbackup")), array('width' => '50%'));
+		$table->construct_row();
+
+		$table->output($lang->backup_header);
+		$form->end();
+		$page->output_footer();
 	}
+	
 }
