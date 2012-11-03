@@ -195,7 +195,7 @@ function mybbatically_run()
 
 	if(!$zip) 
 	{  
-		echo = $lang->could_not_create_zip;
+		echo $lang->could_not_create_zip;
 		exit;  
 	}  
 	if($zip->open("$file_zipped") != "true") 
