@@ -83,14 +83,18 @@ function mybbatically_admin_tools_action_handler(&$actions)
 
 function mybbatically_admin_tools_permissions(&$admin_permissions)
 {
-	$admin_permissions['mybbatically'] = 'Allowed to update board?';
+	$admin_permissions['mybbatically'] = $lang->allowed_to_upgrade_board;
 } 
 
 function recursive_move($dirsource, $dirdest)
 {
+	global $mybb;
+
 	if(is_dir($dirsource))$dir_handle=opendir($dirsource);
 	$dirname = substr($dirsource,strrpos($dirsource,"/")+1);
 	
+	if ($mybb->request_method == "post")
+	{
 	while($file=readdir($dir_handle))
 	{
 		if($file!="." && $file!="..")
@@ -107,6 +111,8 @@ function recursive_move($dirsource, $dirdest)
 			}
 		}
 	}
+}
+
 	closedir($dir_handle);
 	rmdir($dirsource);
 }
@@ -137,9 +143,38 @@ function rmdir_recursive($dir)
 	rmdir($dir);
 }
 
+function rmdir_recursive_images()
+{
+	$dir = './mybbatically/Upload/images';
+	$files = scandir($dir);
+	array_shift($files);    //Remove '.' from array
+	array_shift($files);    //Remove '..' from array
+	
+	foreach($files as $file) 
+	{
+		$file = $dir . '/' . $file;
+		if(is_dir($file)) 
+		{
+			rmdir_recursive($file);
+			if(file_exists($file))
+			{
+				rmdir($file);
+			}
+		}
+		else
+		{
+			unlink($file);
+		}
+	}
+	
+	rmdir($dir);
+}
+
 function mybbatically_run()
 {
-	global $config, $mybb;
+	global $config, $lang, $mybb;
+
+	$lang->load('mybbatically');
 
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
@@ -155,25 +190,30 @@ function mybbatically_run()
         fwrite($fp,$fetch_file); 
         fclose($fp);
 
+
 	//Unzip the file  
 	$zip = new ZipArchive;
 
 	if(!$zip) 
 	{  
-		echo "<br>Could not create .zip archive";
+		echo = $lang->could_not_create_zip;
 		exit;  
 	}  
 	if($zip->open("$file_zipped") != "true") 
 	{  
-		echo "<br>Could not open $file_zipped";  
+		echo $lang->could_not_open_zip;  
 	}  
 	if(!$zip->extractTo("$file_unzipped"))
 	{
-		echo "<br>Could not extract $file_zipped";
+		echo $lang->could_not_extract_zip;
 	}
 
+	if ($mybb->request_method == "post" && $mybb->input['overwrite_images_true'] != 'overwrite_images_checked')
+	{
+	rmdir_recursive_images();
+	}
 
-	//Move files
+	// Move files
 	$srcDir = './mybbatically/Upload/';
 	$destDir = '../';
 
@@ -190,7 +230,7 @@ function mybbatically_run()
 	//Remove zip
 	unlink('mybbatically.zip');
 
-	log_admin_action(array('do' => 'Upgraded board to the latest available version on '.date($mybb->settings['dateformat']).' at '.date($mybb->settings['timeformat'])));
+	log_admin_action(array('do' => $lang->upgraded_board_on.date($mybb->settings['dateformat']).$lang->at.date($mybb->settings['timeformat'])));
 }
 
 ?>
