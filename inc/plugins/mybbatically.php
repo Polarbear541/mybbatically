@@ -95,23 +95,23 @@ function recursive_move($dirsource, $dirdest)
 	
 	if ($mybb->request_method == "post")
 	{
-	while($file=readdir($dir_handle))
-	{
-		if($file!="." && $file!="..")
+		while($file=readdir($dir_handle))
 		{
-			if(!is_dir($dirsource."/".$file))
+			if($file!="." && $file!="..")
 			{
-				copy ($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
-				unlink($dirsource."/".$file);
+				if(!is_dir($dirsource."/".$file))
+				{
+					copy ($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
+					unlink($dirsource."/".$file);
+				}
+				else
+				{
+					$dirdest1 = $dirdest."/".$dirname;
+					recursive_move($dirsource."/".$file, $dirdest1);
+				}
 			}
-			else
-			{
-				$dirdest1 = $dirdest."/".$dirname;
-				recursive_move($dirsource."/".$file, $dirdest1);
-			}
-		}
+		}	
 	}
-}
 
 	closedir($dir_handle);
 	rmdir($dirsource);
@@ -187,10 +187,9 @@ function mybbatically_run()
 	$file_unzipped = "mybbatically";
 	$fetch_file = fetch_remote_file($download_url);
 	$fp = fopen($file_zipped, "w");
-        fwrite($fp,$fetch_file); 
-        fclose($fp);
-
-
+	fwrite($fp,$fetch_file); 
+	fclose($fp);
+	
 	//Unzip the file  
 	$zip = new ZipArchive;
 
@@ -208,17 +207,17 @@ function mybbatically_run()
 		echo $lang->could_not_extract_zip;
 	}
 
-	if ($mybb->request_method == "post" && $mybb->input['overwrite_images_true'] != 'overwrite_images_checked')
+	if($mybb->request_method == "post" && $mybb->input['overwrite_images_true'] != 'overwrite_images_checked')
 	{
-	rmdir_recursive_images();
+		rmdir_recursive_images();
 	}
-
+	
 	// Move files
 	$srcDir = './mybbatically/Upload/';
 	$destDir = '../';
-
+	
 	rename($srcDir.'/admin', $srcDir.'/'.$config['admin_dir']);
-
+	
 	recursive_move($srcDir,$destDir);
 	
 	$zip->close();
@@ -226,11 +225,10 @@ function mybbatically_run()
 	//Delete remaining directories
 	$dir = 'mybbatically';
 	rmdir_recursive($dir);
-
+	
 	//Remove zip
 	unlink('mybbatically.zip');
 
 	log_admin_action(array('do' => $lang->upgraded_board_on.date($mybb->settings['dateformat']).$lang->at.date($mybb->settings['timeformat'])));
 }
-
 ?>

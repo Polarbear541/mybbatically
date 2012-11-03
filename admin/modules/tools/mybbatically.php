@@ -64,7 +64,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$page->output_footer();
 	}
 	
-	if($mybb->input['action'] == "upgrade" && $mybb->version_code != $latest_code)
+	if($mybb->input['action'] == "upgrade")
 	{
 		$page->output_header($lang->mybbatically);
 		$page->output_nav_tabs($sub_tabs, 'upgrade');
@@ -92,29 +92,29 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$buttons[] = $form->generate_submit_button($lang->button_upgrade);
 		$form->output_submit_wrapper($buttons);
 
-		if ($mybb->request_method == "post" && $mybb->input['upgrade_true'] != 'upgrade_checked')
+		if($mybb->request_method == "post" && $mybb->input['upgrade_true'] != 'upgrade_checked')
 		{
 			flash_message($lang->error_confirm_upgrade, 'error');
 			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
 			exit;
 		}
 
-		elseif ($mybb->request_method == "post" && $mybb->input['upgrade_true'] == 'upgrade_checked')
+		elseif($mybb->request_method == "post" && $mybb->input['upgrade_true'] == 'upgrade_checked')
 		{
 			require_once MYBB_ROOT."inc/plugins/mybbatically.php";
-		if ($mybb->input['lock_true'] == 'lock_checked')
-		{
-			mybbatically_run();
-			unlink('../install/lock');
-			admin_redirect('/install/upgrade.php');
-			exit;
-		}
-		elseif ($mybb->input['lock_true'] != 'lock_checked')
-		{
-			mybbatically_run();
-			flash_message($lang->upgrade_in_progress, 'success');
-			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
-		}
+			if($mybb->input['lock_true'] == 'lock_checked')
+			{
+				mybbatically_run();
+				unlink('../install/lock');
+				admin_redirect('/install/upgrade.php');
+				exit;
+			}
+			elseif($mybb->input['lock_true'] != 'lock_checked')
+			{
+				mybbatically_run();
+				flash_message($lang->upgrade_in_progress, 'success');
+				admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
+			}
 		}
 
 		$form->end();
