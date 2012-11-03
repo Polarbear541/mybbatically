@@ -83,6 +83,8 @@ function mybbatically_admin_tools_action_handler(&$actions)
 
 function mybbatically_admin_tools_permissions(&$admin_permissions)
 {
+	global $lang;
+	$lang->load('mybbatically');
 	$admin_permissions['mybbatically'] = $lang->allowed_to_upgrade_board;
 } 
 
