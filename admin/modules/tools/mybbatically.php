@@ -64,7 +64,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$page->output_footer();
 	}
 	
-	if($mybb->input['action'] == "upgrade")
+	if($mybb->input['action'] == "upgrade" && $mybb->version_code != $latest_code)
 	{
 		$page->output_header($lang->mybbatically);
 		$page->output_nav_tabs($sub_tabs, 'upgrade');
@@ -72,17 +72,20 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table = new Table;
 		$table->construct_header($lang->upgrade_your_board, array("colspan" => 0));
 		$table->construct_header('', array("colspan" => 0));
-		$table->construct_cell($lang->upgrading_from_version, array('width' => '70%'));
+		$table->construct_cell($lang->updating_from_version, array('width' => '70%'));
 		$table->construct_cell("$mybb->version", array('width' => '20%'));
 		$table->construct_row();
-		$table->construct_cell($lang->upgrading_to_version, array('width' => '70%'));
+		$table->construct_cell($lang->updating_to_version, array('width' => '70%'));
 		$table->construct_cell("$latest_version", array('width' => '20%'));
-		$table->construct_row();
-		$table->construct_cell($lang->important_notice, array('width' => '70%'));
-		$table->construct_cell($lang->upgrade_my_board.$form->generate_check_box('upgrade_true','upgrade_checked')."</div>", array('width' => '20%'));
 		$table->construct_row();
 		$table->construct_cell($lang->upgrading_notice, array('width' => '70%'));
 		$table->construct_cell($lang->delete_lock_file.$form->generate_check_box('lock_true','lock_checked', '', array('checked' => 1))."</div>", array('width' => '20%'));
+		$table->construct_row();
+		$table->construct_cell($lang->overwrite_image_files_notice, array('width' => '70%'));
+		$table->construct_cell('$lang->overwrite_image_files'.$form->generate_check_box('overwrite_images_true','overwrite_images_checked')."</div>", array('width' => '20%'));
+		$table->construct_row();
+		$table->construct_cell($lang->important_notice, array('width' => '70%'));
+		$table->construct_cell($lang->upgrade_my_board.$form->generate_check_box('upgrade_true','upgrade_checked')."</div>", array('width' => '20%'));
 		$table->construct_row();
 		$table->output($lang->version_stats);
 
@@ -109,7 +112,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		elseif ($mybb->input['lock_true'] != 'lock_checked')
 		{
 			mybbatically_run();
-			flash_message($lang->upgraded.$mybb->version_code, 'success');
+			flash_message($lang->upgrade_in_progress, 'success');
 			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
 		}
 		}
@@ -124,11 +127,10 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table = new Table;
 		$table->construct_header($lang->error_already_latest_version, array("colspan" => 0));
 		$table->construct_header('', array("colspan" => 0));
-		$table->construct_cell($lang->running_latest_version, array('width' => '70%'));
+		$table->construct_cell($lang->congratulations_latest_version, array('width' => '70%'));
 		$table->construct_cell("$mybb->version", array('width' => '20%'));
 		$table->construct_row();
 		$table->output($lang->version_stats);
 		$page->output_footer();	
 	}
 }
-?>
