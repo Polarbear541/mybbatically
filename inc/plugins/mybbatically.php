@@ -28,7 +28,7 @@ function mybbatically_info()
 function mybbatically_activate()
 {
 	global $db, $lang;
-	
+
 	$lang->load('mybbatically');
 
 	$mybbatically_group = array(
@@ -39,10 +39,10 @@ function mybbatically_activate()
 		'disporder'    => "1",
 		'isdefault'  => "0",
 	);
-	
+
 	$db->insert_query('settinggroups', $mybbatically_group);
 	$gid = $db->insert_id(); 
-	
+
 	$mybbatically_setting_1 = array(
 		'sid'            => 'NULL',
 		'name'        => 'mybbatically_global_switch',
@@ -53,7 +53,7 @@ function mybbatically_activate()
 		'disporder'        => 1,
 		'gid'            => intval($gid),
 	);
-	
+
 	$db->insert_query('settings', $mybbatically_setting_1);
 	rebuild_settings();
 }
@@ -69,7 +69,7 @@ function mybbatically_deactivate()
 function mybbatically_admin_tools_menu(&$sub_menu)
 {
 	global $mybb;
-	
+
 	if ($mybb->settings['mybbatically_global_switch'] == 1)
 	{
 		$sub_menu[] = array('id' => 'mybbatically', 'title' => 'MyBBatically', 'link' => 'index.php?module=tools-mybbatically');
@@ -92,7 +92,7 @@ function recursive_move($dirsource, $dirdest)
 
 	if(is_dir($dirsource))$dir_handle=opendir($dirsource);
 	$dirname = substr($dirsource,strrpos($dirsource,"/")+1);
-	
+
 	if ($mybb->request_method == "post")
 	{
 		while($file=readdir($dir_handle))
@@ -101,7 +101,7 @@ function recursive_move($dirsource, $dirdest)
 			{
 				if(!is_dir($dirsource."/".$file))
 				{
-					copy ($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
+					@copy ($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
 					unlink($dirsource."/".$file);
 				}
 				else
@@ -122,7 +122,7 @@ function rmdir_recursive($dir)
 	$files = scandir($dir);
 	array_shift($files);    //Remove '.' from array
 	array_shift($files);    //Remove '..' from array
-	
+
 	foreach($files as $file) 
 	{
 		$file = $dir . '/' . $file;
@@ -139,7 +139,7 @@ function rmdir_recursive($dir)
 			unlink($file);
 		}
 	}
-	
+
 	rmdir($dir);
 }
 
@@ -149,7 +149,7 @@ function rmdir_recursive_images()
 	$files = scandir($dir);
 	array_shift($files);    //Remove '.' from array
 	array_shift($files);    //Remove '..' from array
-	
+
 	foreach($files as $file) 
 	{
 		$file = $dir . '/' . $file;
@@ -166,7 +166,7 @@ function rmdir_recursive_images()
 			unlink($file);
 		}
 	}
-	
+
 	rmdir($dir);
 }
 
@@ -181,7 +181,7 @@ function mybbatically_run()
 	$parser = new XMLParser($contents);
 	$tree = $parser->get_tree();
 	$latest_code = $tree['mybb']['version_code']['value'];
-	
+
 	$download_url = "http://cloud.github.com/downloads/mybb/mybb16/mybb_$latest_code.zip";  
 	$file_zipped = "mybbatically.zip";
 	$file_unzipped = "mybbatically";
@@ -189,7 +189,7 @@ function mybbatically_run()
 	$fp = fopen($file_zipped, "w");
 	fwrite($fp,$fetch_file); 
 	fclose($fp);
-	
+
 	//Unzip the file  
 	$zip = new ZipArchive;
 
@@ -211,21 +211,21 @@ function mybbatically_run()
 	{
 		rmdir_recursive_images();
 	}
-	
+
 	// Move files
 	$srcDir = './mybbatically/Upload/';
 	$destDir = '../';
-	
+
 	rename($srcDir.'/admin', $srcDir.'/'.$config['admin_dir']);
-	
+
 	recursive_move($srcDir,$destDir);
-	
+
 	$zip->close();
-	
+
 	//Delete remaining directories
 	$dir = 'mybbatically';
 	rmdir_recursive($dir);
-	
+
 	//Remove zip
 	unlink('mybbatically.zip');
 
