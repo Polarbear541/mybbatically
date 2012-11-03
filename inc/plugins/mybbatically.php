@@ -101,7 +101,7 @@ function recursive_move($dirsource, $dirdest)
 			{
 				if(!is_dir($dirsource."/".$file))
 				{
-					@copy ($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
+					@copy($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
 					unlink($dirsource."/".$file);
 				}
 				else
