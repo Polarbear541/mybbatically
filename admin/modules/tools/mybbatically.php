@@ -121,22 +121,8 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		}
 
 		$form->output_submit_wrapper($buttons);
-		
-		if($mybb->request_method == "post" && $mybb->input['upgrade_true'] != 'upgrade_checked')
-		{
-			flash_message($lang->error_confirm_upgrade, 'error');
-			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
-			exit;
-		}
-		
-		if($mybb->request_method == "post" && $mybb->input['reinstall_true'] != 'reinstall_checked')
-		{
-			flash_message($lang->error_confirm_reinstall, 'error');
-			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
-			exit;
-		}
 
-		elseif($mybb->request_method == "post" && $mybb->input['upgrade_true'] == 'upgrade_checked')
+		if($mybb->request_method == "post" && $mybb->input['upgrade_true'] == 'upgrade_checked')
 		{
 			require_once MYBB_ROOT."inc/plugins/mybbatically.php";
 			if($mybb->input['lock_true'] == 'lock_checked')
@@ -153,7 +139,6 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 				admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
 			}
 		}
-		
 		elseif($mybb->request_method == "post" && $mybb->input['reinstall_true'] == 'reinstall_checked')
 		{
 			require_once MYBB_ROOT."inc/plugins/mybbatically.php";
@@ -171,6 +156,18 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 				flash_message($lang->reinstall_in_progress, 'success');
 				admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
 			}
+		}
+		elseif($mybb->request_method == "post" && $mybb->input['upgrade_true'] != 'upgrade_checked')
+		{
+			flash_message($lang->error_confirm_upgrade, 'error');
+			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
+			exit;
+		}
+		elseif($mybb->request_method == "post" && $mybb->input['reinstall_true'] != 'reinstall_checked')
+		{
+			flash_message($lang->error_confirm_reinstall, 'error');
+			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
+			exit;
 		}
 
 		$form->end();
