@@ -129,7 +129,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			{
 				mybbatically_run();
 				unlink('../install/lock');
-				admin_redirect('/install/upgrade.php');
+				admin_redirect('../install/upgrade.php');
 				exit;
 			}
 			elseif($mybb->input['lock_true'] != 'lock_checked')
@@ -147,7 +147,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 				mybbatically_run();
 				unlink('../inc/config.php');
 				unlink('../install/lock');
-				admin_redirect('/install/index.php');
+				admin_redirect('../install/index.php');
 				exit;
 			}
 			elseif($mybb->input['remove_true'] != 'remove_checked')
