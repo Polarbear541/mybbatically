@@ -15,7 +15,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		'link' => "index.php?module=tools-mybbatically&amp;action=statistics",
 		'description' => $lang->stats_desc
 	);
-
+	
 	$sub_tabs['upgrade'] = array(
 		'title' => $lang->upgrade,
 		'link' => "index.php?module=tools-mybbatically&amp;action=upgrade",
@@ -27,17 +27,17 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		'link' => "index.php?module=tools-mybbatically&amp;action=backup",
 		'description' => $lang->backup_desc
 	);
-
+	
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
-
+	
 	$parser = new XMLParser($contents);
 	$tree = $parser->get_tree();
-
+	
 	$latest_code = $tree['mybb']['version_code']['value'];
 	$latest_version = "<strong>".$tree['mybb']['latest_version']['value']."</strong> (".$latest_code.")";
-
-	if($mybb->input['action'] == "statistics" || $mybb->input['action'] == "") 
+	
+	if($mybb->input['action'] == "statistics" || $mybb->input['action'] == "")
 	{
 		if($latest_code > $mybb->version_code)
 		{
@@ -49,22 +49,22 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			flash_message($lang->running_latest_version, "success");
 			$mybbversion = "<span style='color: green;'><strong>$mybb->version</strong></span>";
 		}
-
+		
 		$page->output_header($lang->mybbatically);
 		$page->output_nav_tabs($sub_tabs, 'statistics');
-
+		
 		$table = new Table;
 		$table->construct_header($lang->mybb_version_stats, array("colspan" => 0));
 		$table->construct_header('', array("colspan" => 0));
-
+		
 		$table->construct_cell($lang->currently_running_version, array('width' => '50%'));
 		$table->construct_cell($mybbversion, array('width' => '50%'));
 		$table->construct_row();
-
+		
 		$table->construct_cell($lang->latest_version_available, array('width' => '50%'));
 		$table->construct_cell($latest_version, array('width' => '50%'));
 		$table->construct_row();
-
+		
 		$table->output($lang->version_stats);
 		$page->output_footer();
 	}
@@ -96,7 +96,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			$table->construct_cell($lang->upgrade_my_board.$form->generate_check_box('upgrade_true','upgrade_checked')."</div>", array('width' => '20%'));
 			$table->construct_row();
 			$table->output($lang->version_stats);
-
+			
 			$buttons[] = $form->generate_submit_button($lang->button_upgrade);
 		}
 		else
@@ -116,12 +116,12 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			$table->construct_cell($lang->reinstall_my_board.$form->generate_check_box('reinstall_true','reinstall_checked')."</div>", array('width' => '20%'));
 			$table->construct_row();
 			$table->output($lang->version_stats);
-
+			
 			$buttons[] = $form->generate_submit_button($lang->button_reinstall);
 		}
-
+		
 		$form->output_submit_wrapper($buttons);
-
+		
 		if($mybb->request_method == "post" && $mybb->input['upgrade_true'] == 'upgrade_checked')
 		{
 			require_once MYBB_ROOT."inc/plugins/mybbatically.php";
@@ -169,7 +169,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
 			exit;
 		}
-
+		
 		$form->end();
 		$page->output_footer();
 	}
@@ -193,18 +193,17 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table = new Table;
 		$table->construct_header($lang->backup_desc, array("colspan" => 0));
 		$table->construct_header('', array("colspan" => 0));
-
+		
 		$table->construct_cell($lang->backup_files, array('width' => '50%'));
 		$table->construct_cell($form->generate_submit_button($lang->button_files, array("name" => "do_filebackup")), array('width' => '50%'));
 		$table->construct_row();
-
+		
 		$table->construct_cell($lang->backup_database, array('width' => '50%'));
 		$table->construct_cell($form->generate_submit_button($lang->button_db, array("name" => "do_dbbackup")), array('width' => '50%'));
 		$table->construct_row();
-
+		
 		$table->output($lang->backup_header);
 		$form->end();
 		$page->output_footer();
-	}
-	
+	}	
 }

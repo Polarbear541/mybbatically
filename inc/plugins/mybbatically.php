@@ -11,9 +11,9 @@ $plugins->add_hook('admin_tools_permissions', 'mybbatically_admin_tools_permissi
 function mybbatically_info()
 {
 	global $lang;
-
+	
 	$lang->load('mybbatically');
-
+	
 	return array(
 		"name"  => $lang->mybbatically,
 		"description"=> $lang->mybbatically_desc,
@@ -30,7 +30,7 @@ function mybbatically_activate()
 	global $db, $lang;
 	
 	$lang->load('mybbatically');
-
+	
 	$mybbatically_group = array(
 		'gid'    => 'NULL',
 		'name'  => 'mybbatically',
@@ -91,7 +91,7 @@ function mybbatically_admin_tools_permissions(&$admin_permissions)
 function recursive_move($dirsource, $dirdest)
 {
 	global $mybb;
-
+	
 	if(is_dir($dirsource))$dir_handle=opendir($dirsource);
 	$dirname = substr($dirsource,strrpos($dirsource,"/")+1);
 	
@@ -114,7 +114,7 @@ function recursive_move($dirsource, $dirdest)
 			}
 		}	
 	}
-
+	
 	closedir($dir_handle);
 	rmdir($dirsource);
 }
@@ -175,9 +175,9 @@ function rmdir_recursive_images()
 function mybbatically_run()
 {
 	global $config, $lang, $mybb;
-
+	
 	$lang->load('mybbatically');
-
+	
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
 	$parser = new XMLParser($contents);
@@ -194,7 +194,7 @@ function mybbatically_run()
 	
 	//Unzip the file  
 	$zip = new ZipArchive;
-
+	
 	if(!$zip) 
 	{  
 		echo $lang->could_not_create_zip;
@@ -208,7 +208,7 @@ function mybbatically_run()
 	{
 		echo $lang->could_not_extract_zip;
 	}
-
+	
 	if($mybb->request_method == "post" && $mybb->input['overwrite_images_true'] != 'overwrite_images_checked')
 	{
 		rmdir_recursive_images();
@@ -230,7 +230,7 @@ function mybbatically_run()
 	
 	//Remove zip
 	unlink('mybbatically.zip');
-
+	
 	log_admin_action(array('do' => $lang->upgraded_board_on.date($mybb->settings['dateformat']).$lang->at.date($mybb->settings['timeformat'])));
 }
 
@@ -310,7 +310,7 @@ function mybbatically_backup_db()
 		}
 		
 		$fields = "`".implode("`,`", $field_list)."`";
-
+		
 		$structure = $db->show_create_table($table).";\n";
 		$contents .= $structure;
 		fwrite($fp, $contents);
@@ -342,7 +342,7 @@ function mybbatically_backup_db()
 	$db->set_table_prefix(TABLE_PREFIX);
 	fwrite($fp, $contents);
 	fclose($fp);
-
+	
 	header('Content-Type: application/sql');
 	header('Content-Disposition: attachment; filename=MyBBatically_dbbackup_'.microtime().'.sql');
 	readfile("./db.sql");
