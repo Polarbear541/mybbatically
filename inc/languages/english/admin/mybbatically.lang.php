@@ -57,6 +57,7 @@ $l['reinstall_my_board'] = '<div align=\'center\'>Yes, reinstall my board!<br />
 $l['upgrading_notice'] = '<span style=\'font-size: 25px;\'><strong><u>Upgrading:</u></strong></span><br /> (<strong><u>If you are not sure if the upgrade script needs to be run, please leave the checkbox checked</u></strong>) Some versions don\'t require running the upgrade script, however the majority do. Please uncheck the checkbox on the right to leave the lock file intact.';
 $l['reinstall_notice'] = '<span style=\'font-size: 25px;\'><strong><u>Reinstalling:</u></strong></span><br /> (<strong><u>If you wish to completely reinstall MyBB then please leave the checkbox checked</u></strong>) If you only want to restore the original files then please uncheck this box.';
 $l['complete_reinstall'] = '<div align=\'center\'>Delete the config and lock files to completely install MyBB<br />';
+$l['delete_lock_file'] = '<div align=\'center\'>Delete the lock file to enable upgrade script<br />';
 $l['overwrite_image_files_notice'] = '<span style=\'font-size: 25px;\'><strong><u>Overwriting image files</u></strong></span><br /> This option allows you to select whether you\'d like to overwrite the image files or not. You may wish to de-select this if you have uploaded your theme\'s files to the images directory ad this will stop them being overwritten by the upgrader.';
 $l['overwrite_image_files'] = '<div align=\'center\'>Overwrite image files.<br />';
 
