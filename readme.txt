@@ -9,7 +9,7 @@ There are no database changes in this plugin.
 There are no template changes in this plugin.
 
 Information:
-This plugin allows you to automatically update MyBB with the touch of a button. This plugin automatically downloads, unzips and overwrites your MyBB files and even removes your install lock file ready for upgrading (if you choose to).
+This plugin allows you to automatically update/reinstall MyBB with the touch of a button. This plugin automatically downloads, unzips and overwrites your MyBB files and even removes your install lock file ready for upgrading/reinstalling (if you choose to).
 
 Install Instructions:
 Upload the MyBBatically files to your MyBB install
@@ -17,7 +17,7 @@ Go to ACP > Plugins > Activate MyBBatically
 Then MyBBatically will appear on the sidebar in the Tools section of your ACP.
 
 Permissions:
-MyBBatically allows you to specify which admins can upgrade the board. To allow a specific admin to upgrade the board, navigate to ACP > Users & Groups > Admin Permissions (whichever admin you wish to allow/disallow to upgrade the board) > Tools & Maintenance > Allowed to updgrade board?
+MyBBatically allows you to specify which admins can upgrade the board. To allow a specific admin to upgrade the board, navigate to ACP > Users & Groups > Admin Permissions (whichever admin you wish to allow/disallow to upgrade the board) > Tools & Maintenance > Allowed to upgrade board?
 You can set this to 'Yes' or 'No' for whichever admins you wish (default is no, super admins will ignore this and be able to upgrade the board regardless).
 
 Using MyBBatically:
