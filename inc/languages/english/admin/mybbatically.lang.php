@@ -32,7 +32,9 @@ $l['latest_version'] = ' while the latest available version is ';
 $l['advise_upgrade'] = '. We advise you upgrade to the latest version as soon as possible.';
 $l['running_latest_version'] = 'Congratulations! Your forum is currently running the latest version of MyBB.';
 $l['error_confirm_upgrade'] = 'Please check the checkbox to confirm the upgrade process.';
-$l['upgraded'] = 'Congratulations! Your board has successfully been upgraded to MyBB version ';
+$l['error_confirm_reinstall'] = 'Please check the checkbox to confirm the reinstall process.';
+$l['upgraded'] = 'Congratulations! Your board has successfully been upgraded';
+$l['reinstalled'] = 'Congratulations! Your board has successfully been reinstalled';
 
 // Version Variables
 $l['currently_running_version'] = '<strong>Your forum is currently running on MyBB version:</strong>';

@@ -135,7 +135,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			elseif($mybb->input['lock_true'] != 'lock_checked')
 			{
 				mybbatically_run();
-				flash_message($lang->upgrade_in_progress, 'success');
+				flash_message($lang->upgraded, 'success');
 				admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
 			}
 		}
@@ -153,7 +153,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			elseif($mybb->input['remove_true'] != 'remove_checked')
 			{
 				mybbatically_run();
-				flash_message($lang->reinstall_in_progress, 'success');
+				flash_message($lang->reinstalled, 'success');
 				admin_redirect('index.php?module=tools-mybbatically&amp;action=upgrade');
 			}
 		}

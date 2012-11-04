@@ -145,33 +145,6 @@ function rmdir_recursive($dir)
 	rmdir($dir);
 }
 
-function rmdir_recursive_images()
-{
-	$dir = './mybbatically/Upload/images';
-	$files = scandir($dir);
-	array_shift($files);    //Remove '.' from array
-	array_shift($files);    //Remove '..' from array
-	
-	foreach($files as $file) 
-	{
-		$file = $dir . '/' . $file;
-		if(is_dir($file)) 
-		{
-			rmdir_recursive($file);
-			if(file_exists($file))
-			{
-				rmdir($file);
-			}
-		}
-		else
-		{
-			unlink($file);
-		}
-	}
-	
-	rmdir($dir);
-}
-
 function mybbatically_run()
 {
 	global $config, $lang, $mybb;
@@ -211,7 +184,8 @@ function mybbatically_run()
 	
 	if($mybb->request_method == "post" && $mybb->input['overwrite_images_true'] != 'overwrite_images_checked')
 	{
-		rmdir_recursive_images();
+		$dir = './mybbatically/Upload/images';
+		rmdir_recursive($dir);
 	}
 	
 	// Move files
@@ -225,7 +199,7 @@ function mybbatically_run()
 	$zip->close();
 	
 	//Delete remaining directories
-	$dir = 'mybbatically';
+	$dir = './mybbatically';
 	rmdir_recursive($dir);
 	
 	//Remove zip
