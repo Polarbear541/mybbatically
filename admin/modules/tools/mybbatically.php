@@ -28,6 +28,12 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		'description' => $lang->backup_desc
 	);
 	
+	$sub_tabs['plugins'] = array(
+		'title' => $lang->plugins,
+		'link' => "index.php?module=tools-mybbatically&amp;action=plugins",
+		'description' => $lang->plugins_desc
+	);
+	
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
 	
@@ -185,7 +191,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			mybbatically_backup_db();
 		}
 	}
-	else
+	elseif($mybb->input['action'] == "backup")
 	{
 		$page->output_header($lang->mybbatically);
 		$page->output_nav_tabs($sub_tabs, 'backup');
@@ -203,6 +209,26 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table->construct_row();
 		
 		$table->output($lang->backup_header);
+		$form->end();
+		$page->output_footer();
+	}	
+
+	if($mybb->input['action'] == "plugins" && $mybb->request_method == "post")
+	{
+		
+	}
+	elseif($mybb->input['action'] == "plugins")
+	{
+		$page->output_header($lang->mybbatically);
+		$page->output_nav_tabs($sub_tabs, 'plugins');
+		$form = new Form("index.php?module=tools-mybbatically&amp;action=plugins", "post", "mybbatically");
+		$table = new Table;
+		$table->construct_header($lang->plugins_desc, array("colspan" => 0));
+		$table->construct_header('', array("colspan" => 0));
+		$table->construct_cell($lang->plugin_updates, array('width' => '50%'));
+		$table->construct_cell($form->generate_submit_button($lang->button_pluginupdate, array("name" => "do_pluginupdate")), array('width' => '50%'));
+		$table->construct_row();		
+		$table->output($lang->plugins_header);
 		$form->end();
 		$page->output_footer();
 	}	
