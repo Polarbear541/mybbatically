@@ -28,12 +28,6 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		'description' => $lang->backup_desc
 	);
 	
-	$sub_tabs['plugins'] = array(
-		'title' => $lang->plugins,
-		'link' => "index.php?module=tools-mybbatically&amp;action=plugins",
-		'description' => $lang->plugins_desc
-	);
-	
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
 	
@@ -231,5 +225,6 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		$table->output($lang->plugins_header);
 		$form->end();
 		$page->output_footer();
-	}	
+	}
 }
+?>

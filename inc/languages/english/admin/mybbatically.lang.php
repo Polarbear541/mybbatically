@@ -26,13 +26,6 @@ $l['backup_database'] = 'Backup your database';
 $l['button_files'] = 'Download File Backup';
 $l['button_db'] = 'Download DB Backup';
 
-// Plugin Variables
-$l['plugins'] = 'Plugins';
-$l['plugins_desc'] = 'Update your plugins with a touch of a button';
-$l['plugins_header'] = 'Update your plugins';
-$l['plugin_updates'] = 'Update your plugins';
-$l['button_pluginupdate'] = 'Update Plugins';
-
 // Message Variables
 $l['currently_running'] = 'Your forum is currently running MyBB ';
 $l['latest_version'] = ' while the latest available version is ';

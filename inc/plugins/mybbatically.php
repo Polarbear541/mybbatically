@@ -19,7 +19,7 @@ function mybbatically_info()
 		"description"=> $lang->mybbatically_desc,
 		"website"        => "http://community.mybb.com/thread-128545.html",
 		"author"        => "Polarbear541 & Vernier",
-		"version"        => "1.0",
+		"version"        => "1.2",
 		"guid"             => "31d01c38e6f2dc1a790065801975eab6",
 		"compatibility" => "16*"
 	);

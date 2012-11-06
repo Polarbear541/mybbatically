@@ -2,7 +2,7 @@ Plugin Info:
 Name: MyBBatically
 Description: An automatic updater for MyBB.
 Author: Polarbear541 & Vernier
-Version: 1.0
+Version: 1.2
 Compatibility: 1.6.x
 Files: 3 (1 plugin file, 1 language file and 1 admin module)
 There are no database changes in this plugin.
