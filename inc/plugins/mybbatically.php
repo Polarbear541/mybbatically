@@ -157,7 +157,7 @@ function mybbatically_run()
 	$tree = $parser->get_tree();
 	$latest_code = $tree['mybb']['version_code']['value'];
 	
-	$download_url = "http://cloud.github.com/downloads/mybb/mybb16/mybb_$latest_code.zip";  
+	$download_url = "http://resources.mybb.com/downloads/mybb_$latest_code.zip";  
 	$file_zipped = "mybbatically.zip";
 	$file_unzipped = "mybbatically";
 	$fetch_file = fetch_remote_file($download_url);
