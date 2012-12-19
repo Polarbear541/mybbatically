@@ -32,7 +32,6 @@ function mybbatically_activate()
 	$lang->load('mybbatically');
 	
 	$mybbatically_group = array(
-		'gid'    => 'NULL',
 		'name'  => 'mybbatically',
 		'title'      => $lang->mybbatically,
 		'description'    => $lang->settings_desc,
@@ -44,7 +43,6 @@ function mybbatically_activate()
 	$gid = $db->insert_id(); 
 	
 	$mybbatically_setting_1 = array(
-		'sid'            => 'NULL',
 		'name'        => 'mybbatically_global_switch',
 		'title'            => $lang->enable,
 		'description'    => $lang->enable_desc,
