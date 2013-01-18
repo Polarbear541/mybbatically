@@ -350,7 +350,7 @@ function mybbatically_get_latest_version()
 	
 		foreach($tree['results']['result'] as $result)
 		{
-			return '<strong>'.$result['version']['value'].'</strong>';
+			return $result['version']['value'];
 		}
 }
 }
@@ -369,9 +369,7 @@ function mybbatically_update_plugin()
 	
 	$lang->load('mybbatically');
 
-$download_url = "http​s://​gith​ub.c​om/Pol​arbe​ar54​1/my​bbat​ical​ly/a​rchi​ve/";
-$download_url .= mybbatically_get_latest_version();
-$download_url .= ".zip";
+$download_url = "http​s://​gith​ub.c​om/Pol​arbe​ar54​1/my​bbat​ical​ly/a​rchi​ve/v" . mybbatically_get_latest_version() . ".zip";
 	$file_zipped = "mybbatically_plugin.zip";
 	$file_unzipped = "mybbatically_plugin";
 	$fetch_file = fetch_remote_file($download_url);
