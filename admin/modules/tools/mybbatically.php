@@ -28,6 +28,12 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		'description' => $lang->backup_desc
 	);
 	
+	$sub_tabs['update_plugin'] = array(
+		'title' => $lang->update_plugin,
+		'link' => "index.php?module=tools-mybbatically&amp;action=update_plugin",
+		'description' => $lang->update_plugin_desc
+	);
+
 	require_once MYBB_ROOT."inc/class_xml.php";
 	$contents = fetch_remote_file("http://www.mybb.com/version_check.php");
 	
@@ -49,23 +55,55 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			flash_message($lang->running_latest_version, "success");
 			$mybbversion = "<span style='color: green;'><strong>$mybb->version</strong></span>";
 		}
-		
+
+		$mybbatically_get_latest_version = mybbatically_get_latest_version();
+		$mybbatically_get_current_version = mybbatically_get_current_version();
+
+		if($mybbatically_get_latest_version > $mybbatically_get_current_version)
+		{
+			flash_message($lang->plugin_currently_running.$mybbatically_get_current_version.$lang->latest_version.$mybbatically_get_latest_version.$lang->advise_upgrade, "error");
+			$mybbatically_get_current_version = "<span style='color: red;'><strong>$mybbatically_get_current_version</strong></span>";
+		}
+		else
+		{
+			$mybbatically_get_current_version = "<span style='color: green;'><strong>$mybbatically_get_current_version</strong></span>";
+		}
+
+
 		$page->output_header($lang->mybbatically);
 		$page->output_nav_tabs($sub_tabs, 'statistics');
-		
+
 		$table = new Table;
-		$table->construct_header($lang->mybb_version_stats, array("colspan" => 0));
-		$table->construct_header('', array("colspan" => 0));
 		
-		$table->construct_cell($lang->currently_running_version, array('width' => '50%'));
+		$table->construct_header($lang->mybb_version_stats_desc, array("colspan" => 2));
+		$table->construct_cell($lang->currently_running_mybb_version, array('width' => '50%'));
 		$table->construct_cell($mybbversion, array('width' => '50%'));
 		$table->construct_row();
 		
-		$table->construct_cell($lang->latest_version_available, array('width' => '50%'));
+		$table->construct_cell($lang->latest_mybb_version_available, array('width' => '50%'));
 		$table->construct_cell($latest_version, array('width' => '50%'));
 		$table->construct_row();
+
+
+		$table->output($lang->mybb_version_stats);
+
+// MyBBatically Version Statistics
+
+		$table2 = new Table;
 		
-		$table->output($lang->version_stats);
+		$table2->construct_header($lang->mybbatically_version_stats_desc, array("colspan" => 2));
+		
+		$table2->construct_cell($lang->currently_running_mybbatically_version, array('width' => '50%'));
+		$table2->construct_cell($mybbatically_get_current_version, array('width' => '50%'));
+		$table2->construct_row();
+
+		$table2->construct_cell($lang->latest_mybbatically_version_available, array('width' => '50%'));
+		$table2->construct_cell($mybbatically_get_latest_version, array('width' => '50%'));
+		$table2->construct_row();
+
+
+		$table2->output($lang->mybbatically_version_stats);
+
 		$page->output_footer();
 	}
 	
@@ -204,6 +242,41 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		
 		$table->output($lang->backup_header);
 		$form->end();
+		$page->output_footer();
+	}
+
+	if($mybb->input['action'] == "update_plugin")
+	{
+		$page->output_header($lang->mybbatically);
+		$page->output_nav_tabs($sub_tabs, 'update_plugin');
+		$form = new Form("index.php?module=tools-mybbatically&amp;action=update_plugin", "post", "mybbatically");
+		$table = new Table;
+		$table->construct_header($lang->update_plugin_desc, array("colspan" => 0));
+		$table->construct_header('', array("colspan" => 0));
+		
+		$table->construct_cell($lang->update_plugin_info, array('width' => '50%'));
+		$table->construct_cell($form->generate_submit_button($lang->button_update_plugin, array("name" => "do_pluginupdate")), array('width' => '50%'));
+		$table->construct_row();
+
+		$table->output($lang->update_plugin_header);
+		$form->end();
+		if($mybb->request_method == "post" && isset($mybb->input['do_pluginupdate']))
+		{
+			mybbatically_update_plugin();
+			if($mybbatically_get_latest_version == $mybbatically_get_current_version)
+			{
+				flash_message($lang->update_plugin_success.$mybbatically_get_current_version, "success");
+				admin_redirect("index.php?module=tools-mybbatically&amp;action=statistics");
+				exit;
+			}
+			else
+			{
+				flash_message($lang->update_plugin_error, "error");
+				admin_redirect("index.php?module=tools-mybbatically&amp;action=update_plugin");
+				exit;
+			}
+
+		}
 		$page->output_footer();
 	}
 }
