@@ -320,4 +320,96 @@ function mybbatically_backup_db()
 	readfile("./db.sql");
 	unlink("./db.sql");
 }
+
+function mybbatically_get_latest_version()
+{
+	global $page, $parser, $table;
+
+	require_once MYBB_ROOT."inc/class_xml.php";
+
+	$contents = fetch_remote_file("http://mods.mybb.com/xmlbrowse.php?type=mod&keywords=mybbatically");
+	
+	if(!$contents)
+	{
+		$page->output_inline_error($lang->error_communication_problem);
+		$page->output_footer();
+		exit;
+	}
+	
+	$parser = new XMLParser($contents);
+	$tree = $parser->get_tree();
+
+	if(!empty($tree['results']['result']))
+	{
+		if(array_key_exists("tag", $tree['results']['result']))
+		{
+			$only_plugin = $tree['results']['result'];
+			unset($tree['results']['result']);
+			$tree['results']['result'][0] = $only_plugin;
+		}
+	
+		foreach($tree['results']['result'] as $result)
+		{
+			return '<strong>'.$result['version']['value'].'</strong>';
+		}
+}
+}
+
+function mybbatically_get_current_version()
+{
+		$info = array();
+			$infofunction = "mybbatically_info";
+			$mybbatically_info = $infofunction();
+			return '<strong>'.$mybbatically_info['version'].'</strong>';
+}
+
+function mybbatically_update_plugin()
+{
+	global $config, $lang, $mybb;
+	
+	$lang->load('mybbatically');
+
+$download_url = "http​s://​gith​ub.c​om/Pol​arbe​ar54​1/my​bbat​ical​ly/a​rchi​ve/";
+$download_url .= mybbatically_get_latest_version();
+$download_url .= ".zip";
+	$file_zipped = "mybbatically_plugin.zip";
+	$file_unzipped = "mybbatically_plugin";
+	$fetch_file = fetch_remote_file($download_url);
+	$fp = fopen($file_zipped, "w");
+	fwrite($fp,$fetch_file); 
+	fclose($fp);
+
+	$zip = new ZipArchive;
+	
+	if(!$zip) 
+	{  
+		echo $lang->could_not_create_zip;
+		exit;  
+	}  
+	if($zip->open("$file_zipped") != "true") 
+	{  
+		echo $lang->could_not_open_zip;  
+	}  
+	if(!$zip->extractTo("$file_unzipped"))
+	{
+		echo $lang->could_not_extract_zip;
+	}
+
+	$srcDir = './mybbatically_plugin/files/';
+	$destDir = '../';
+
+	recursive_move($srcDir,$destDir);
+	
+	$zip->close();
+
+	//Delete remaining directories
+	$dir = './mybbatically_plugin';
+	rmdir_recursive($dir);
+	
+	//Remove zip
+	unlink('mybbatically_plugin.zip');
+	
+	log_admin_action(array('do' => $lang->updated_plugin_on.date($mybb->settings['dateformat']).$lang->at.date($mybb->settings['timeformat'])));
+}
+
 ?>
