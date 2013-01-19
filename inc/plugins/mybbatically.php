@@ -369,7 +369,7 @@ function mybbatically_update_plugin()
 	
 	$lang->load('mybbatically');
 
-$download_url = "http​s://​gith​ub.c​om/Pol​arbe​ar54​1/my​bbat​ical​ly/a​rchi​ve/v" . mybbatically_get_latest_version() . ".zip";
+$download_url = "http://vernier.me/plugins/mybbatically/" . mybbatically_get_latest_version() . ".zip";
 	$file_zipped = "mybbatically_plugin.zip";
 	$file_unzipped = "mybbatically_plugin";
 	$fetch_file = fetch_remote_file($download_url);
