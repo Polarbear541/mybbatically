@@ -2,7 +2,7 @@ Plugin Info:
 Name: MyBBatically
 Description: An automatic updater for MyBB.
 Author: Polarbear541 & Vernier
-Version: 1.2
+Version: 1.3
 Compatibility: 1.6.x
 Files: 3 (1 plugin file, 1 language file and 1 admin module)
 There are no database changes in this plugin.
@@ -12,7 +12,12 @@ Information:
 This plugin allows you to automatically update/reinstall MyBB with the touch of a button. This plugin automatically downloads, unzips and overwrites your MyBB files and even removes your install lock file ready for upgrading/reinstalling (if you choose to).
 
 Install Instructions:
-Upload the MyBBatically files to your MyBB install
+Upload the MyBBatically files to your MyBB install:
+
+files/admin/modules/tools/mybbatically.php to yourforum/admin/modules/tools/mybbatically.php
+files/inc/languages/english/admin/mybbatically.lang.php to yourforum/inc/languages/english/admin/mybbatically.lang.php
+files/inc/plugins/mybbatically.php to yourforum/inc/plugins/mybbatically.php
+
 Go to ACP > Plugins > Activate MyBBatically
 Then MyBBatically will appear on the sidebar in the Tools section of your ACP.
 
