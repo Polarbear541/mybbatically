@@ -19,7 +19,7 @@ function mybbatically_info()
 		"description"=> $lang->mybbatically_desc,
 		"website"        => "http://community.mybb.com/thread-128545.html",
 		"author"        => "Polarbear541 & Vernier",
-		"version"        => "1.2",
+		"version"        => "1.3",
 		"guid"             => "31d01c38e6f2dc1a790065801975eab6",
 		"compatibility" => "16*"
 	);
@@ -360,7 +360,7 @@ function mybbatically_get_current_version()
 		$info = array();
 			$infofunction = "mybbatically_info";
 			$mybbatically_info = $infofunction();
-			return '<strong>'.$mybbatically_info['version'].'</strong>';
+			return $mybbatically_info['version'];
 }
 
 function mybbatically_update_plugin()
