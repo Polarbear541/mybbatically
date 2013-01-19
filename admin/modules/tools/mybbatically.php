@@ -116,8 +116,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 		
 		if($latest_code != $mybb->version_code)
 		{
-			$table->construct_header($lang->upgrade_your_board, array("colspan" => 0));
-			$table->construct_header('', array("colspan" => 0));
+			$table->construct_header($lang->upgrade_your_board, array("colspan" => 2));
 			$table->construct_cell($lang->upgrading_from_version, array('width' => '70%'));
 			$table->construct_cell("$mybb->version", array('width' => '20%'));
 			$table->construct_row();
@@ -133,14 +132,13 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			$table->construct_cell($lang->important_notice, array('width' => '70%'));
 			$table->construct_cell($lang->upgrade_my_board.$form->generate_check_box('upgrade_true','upgrade_checked')."</div>", array('width' => '20%'));
 			$table->construct_row();
-			$table->output($lang->version_stats);
+			$table->output($lang->upgrade_your_board);
 			
 			$buttons[] = $form->generate_submit_button($lang->button_upgrade);
 		}
 		else
 		{
-			$table->construct_header($lang->reinstall_your_board, array("colspan" => 0));
-			$table->construct_header('', array("colspan" => 0));
+			$table->construct_header($lang->reinstall_your_board, array("colspan" => 2));
 			$table->construct_cell($lang->reinstall_version, array('width' => '70%'));
 			$table->construct_cell("$latest_version", array('width' => '20%'));
 			$table->construct_row();
@@ -153,7 +151,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 			$table->construct_cell($lang->important_notice2, array('width' => '70%'));
 			$table->construct_cell($lang->reinstall_my_board.$form->generate_check_box('reinstall_true','reinstall_checked')."</div>", array('width' => '20%'));
 			$table->construct_row();
-			$table->output($lang->version_stats);
+			$table->output($lang->reinstall_your_board);
 			
 			$buttons[] = $form->generate_submit_button($lang->button_reinstall);
 		}
