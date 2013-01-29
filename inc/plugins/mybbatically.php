@@ -19,7 +19,7 @@ function mybbatically_info()
 		"description"=> $lang->mybbatically_desc,
 		"website"        => "http://community.mybb.com/thread-128545.html",
 		"author"        => "Polarbear541 & Vernier",
-		"version"        => "1.3",
+		"version"        => "1.4",
 		"guid"             => "31d01c38e6f2dc1a790065801975eab6",
 		"compatibility" => "16*"
 	);
@@ -101,6 +101,14 @@ function recursive_move($dirsource, $dirdest)
 			{
 				if(!is_dir($dirsource."/".$file))
 				{
+					// Check if the install directory exists, if it doesn't, lets create it!
+					if(!is_dir(MYBB_ROOT."/install"))
+					{
+						mkdir(MYBB_ROOT."/install");
+						mkdir(MYBB_ROOT."/install/images");
+						mkdir(MYBB_ROOT."/install/resources");
+					}
+
 					@copy($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
 					unlink($dirsource."/".$file);
 				}
