@@ -101,14 +101,6 @@ function recursive_move($dirsource, $dirdest)
 			{
 				if(!is_dir($dirsource."/".$file))
 				{
-					// Check if the install directory exists, if it doesn't, lets create it!
-					if(!is_dir(MYBB_ROOT."/install"))
-					{
-						mkdir(MYBB_ROOT."/install");
-						mkdir(MYBB_ROOT."/install/images");
-						mkdir(MYBB_ROOT."/install/resources");
-					}
-
 					@copy($dirsource."/".$file, $dirdest."/".$dirname."/".$file);
 					unlink($dirsource."/".$file);
 				}
@@ -170,7 +162,14 @@ function mybbatically_run()
 	$fp = fopen($file_zipped, "w");
 	fwrite($fp,$fetch_file); 
 	fclose($fp);
-	
+	// Check if the install directory exists, if it doesn't, lets create it!
+	if(!is_dir(MYBB_ROOT."/install"))
+	{
+		mkdir(MYBB_ROOT."/install");
+		mkdir(MYBB_ROOT."/install/images");
+		mkdir(MYBB_ROOT."/install/resources");
+	}
+
 	//Unzip the file  
 	$zip = new ZipArchive;
 	
