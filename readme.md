@@ -1,4 +1,4 @@
-## MyBBatically
+## MyBBatically auto-updater for MyBB
 ### Plugin Info:
 Description: An automatic updater for MyBB.*
 Author: Polarbear541 & Vernier
