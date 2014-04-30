@@ -47,7 +47,7 @@ if($mybb->settings['mybbatically_global_switch'] == 1)
 	{
 		if($latest_code > $mybb->version_code)
 		{
-			flash_message($lang->currently_running.$mybb->version_code.$lang->latest_version.$latest_code.$lang->advise_upgrade, "error");
+			flash_message($lang->currently_running.$mybb->version.$lang->latest_version.$latest_version.$lang->advise_upgrade, "error");
 			$mybbversion = "<span style='color: red;'><strong>$mybb->version</strong></span>";
 		}
 		else
